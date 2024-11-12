@@ -1,18 +1,43 @@
-﻿@{
-    ViewData["Title"] = "Upload Medicine Image";
+﻿@model MedicineIdentification.Models.Medicine
+
+@{
+    ViewData["Title"] = "Upload and View Medicine Details";
 }
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="IdentifyMedicine" method="post" enctype="multipart/form-data">
-    <div>
-        <label for="imageFile">Select an image of the medicine:</label>
-        <input type="file" id="imageFile" name="imageFile" required />
-    </div>
-    <button type="submit">Upload</button>
-</form>
+<div style="display: flex; gap: 20px;">
+    <!-- Left Side: Image Upload Form -->
+    <div style="flex: 1;">
+        <form asp-action="IdentifyMedicine" method="post" enctype="multipart/form-data">
+            <div>
+                <label for="imageFile">Select an image of the medicine:</label>
+                <input type="file" id="imageFile" name="imageFile" required />
+            </div>
+            <button type="submit">Upload</button>
+        </form>
 
-@if (ViewBag.ErrorMessage != null)
-{
-    <div style="color: red;">@ViewBag.ErrorMessage</div>
-}
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div style="color: red;">@ViewBag.ErrorMessage</div>
+        }
+    </div>
+
+    <!-- Right Side: Medicine Details -->
+    <div style="flex: 1;">
+        @if (Model != null)
+        {
+            <img src="@ViewData["ImagePath"]" alt="Uploaded Image" width="200" />
+            <h3>@Model.Label</h3> <!-- Display the medicine label -->
+            <p><strong>Composition:</strong> @Model.Composition</p>
+            <p><strong>Uses:</strong> @Model.Uses</p>
+            <p><strong>Side Effects:</strong> @Model.SideEffects</p>
+            <p><strong>Manufacturer:</strong> @Model.Manufacturer</p>
+            <p><strong>Dosage:</strong> @Model.Dosage</p>
+        }
+        else
+        {
+            <p>No medicine details found.</p>
+        }
+    </div>
+</div>

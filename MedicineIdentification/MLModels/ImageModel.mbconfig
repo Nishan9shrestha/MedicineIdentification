@@ -17,8 +17,8 @@
         "Version": 1,
         "Type": "Trial",
         "TrainerName": "ImageClassificationMulti",
-        "Score": 0.66666666666666663,
-        "RuntimeInSeconds": 58.195,
+        "Score": 0.83333333333333337,
+        "RuntimeInSeconds": 52.531,
         "Parameter": {
           "_SCHEMA_": "e0 * e1 * e2",
           "e0": {
@@ -48,7 +48,7 @@
     },
     "Schema": "e0 * e1 * e2",
     "MetricName": "MicroAccuracy",
-    "ModelFilePath": "C:\\Users\\Acer\\source\\repos\\ModelTrain\\ModelTrain\\ImageModel.mlnet"
+    "ModelFilePath": "C:\\Users\\Acer\\source\\repos\\MedicineIdentification\\MedicineIdentification\\MLModels\\ImageModel.mlnet"
   },
   "Type": "TrainingConfig",
   "Version": 5,
@@ -56,7 +56,7 @@
     "Version": 2,
     "Subsampling": false,
     "Type": "ClassificationTrainingOption",
-    "TrainingTime": 0,
+    "TrainingTime": 2147483647,
     "ValidationOption": {
       "Version": 0,
       "Type": "TrainValidateSplitValidationOption",

@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-namespace ModelTrain
+namespace MedicineIdentification
 {
     public partial class ImageModel
     {
@@ -49,8 +49,7 @@ namespace ModelTrain
 
         #endregion
 
-        private static string MLNetModelPath = Path.GetFullPath("MLModels\\ImageModel.mlnet");
-
+        private static string MLNetModelPath = Path.GetFullPath("ImageModel.mlnet");
 
         public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
 
