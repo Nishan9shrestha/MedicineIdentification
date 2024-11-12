@@ -4,31 +4,36 @@
     ViewData["Title"] = "Upload and View Medicine Details";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2 style="font-family: Arial, sans-serif; color: #333;">@ViewData["Title"]</h2>
 
-<div style="display: flex; gap: 20px;">
+<div style="display: flex; gap: 20px; font-family: Arial, sans-serif; color: #333; align-items: flex-start;">
     <!-- Left Side: Image Upload Form -->
-    <div style="flex: 1;">
+    <div style="flex: 1; background-color: #f8f8f8; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); min-width: 250px;">
         <form asp-action="IdentifyMedicine" method="post" enctype="multipart/form-data">
-            <div>
-                <label for="imageFile">Select an image of the medicine:</label>
-                <input type="file" id="imageFile" name="imageFile" required />
+            <div style="margin-bottom: 15px;">
+                <label for="imageFile" style="display: block; font-weight: bold; margin-bottom: 5px;">Select an image of the medicine:</label>
+                <input type="file" id="imageFile" name="imageFile" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
             </div>
-            <button type="submit">Upload</button>
+            <button type="submit" style="background-color: #4a90e2; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                Upload
+            </button>
+            <button type="button" style="background-color: #ccc; color: #333; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 10px;">
+                Cancel
+            </button>
         </form>
 
         @if (ViewBag.ErrorMessage != null)
         {
-            <div style="color: red;">@ViewBag.ErrorMessage</div>
+            <div style="color: red; margin-top: 15px;">@ViewBag.ErrorMessage</div>
         }
     </div>
 
     <!-- Right Side: Medicine Details -->
-    <div style="flex: 1;">
+    <div style="flex: 1; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); min-width: 250px;">
         @if (Model != null)
         {
-            <img src="@ViewData["ImagePath"]" alt="Uploaded Image" width="200" />
-            <h3>@Model.Label</h3> <!-- Display the medicine label -->
+            <img src="@ViewData["ImagePath"]" alt="Uploaded Image" width="200" style="display: block; margin-bottom: 15px; border-radius: 4px;" />
+            <h3 style="color: #333; font-weight: bold; margin-bottom: 10px;">@Model.Label</h3>
             <p><strong>Composition:</strong> @Model.Composition</p>
             <p><strong>Uses:</strong> @Model.Uses</p>
             <p><strong>Side Effects:</strong> @Model.SideEffects</p>

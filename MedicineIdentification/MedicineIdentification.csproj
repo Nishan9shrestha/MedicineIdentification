@@ -1,9 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\lib\ImageModel.consumption.cs" />
+    <Content Remove="wwwroot\lib\ImageModel.mbconfig" />
+    <Content Remove="wwwroot\lib\ImageModel.mlnet" />
+    <Content Remove="wwwroot\lib\ImageModel.training.cs" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
@@ -17,10 +23,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="wwwroot\uploads\" />
-  </ItemGroup>
-  <ItemGroup Label="ImageModel">
-    <None Include="ImageModel.mlnet">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
