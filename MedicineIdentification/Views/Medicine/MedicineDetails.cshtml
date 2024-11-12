@@ -1,0 +1,22 @@
+﻿@model MedicineIdentification.Models.Medicine
+
+@{
+    ViewData["Title"] = "Medicine Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model != null)
+{
+    <img src="@ViewData["ImagePath"]" alt="Uploaded Image" width="200" />
+    <h3>@Model.Label</h3> <!-- Use Label instead of Name -->
+    <p><strong>Composition:</strong> @Model.Composition</p>
+    <p><strong>Uses:</strong> @Model.Uses</p>
+    <p><strong>Side Effects:</strong> @Model.SideEffects</p>
+    <p><strong>Manufacturer:</strong> @Model.Manufacturer</p>
+    <p><strong>Dosage:</strong> @Model.Dosage</p> <!-- No Reviews column in your model -->
+}
+else
+{
+    <p>No medicine details found.</p>
+}

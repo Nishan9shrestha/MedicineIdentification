@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Upload Medicine Image";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="IdentifyMedicine" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="imageFile">Select an image of the medicine:</label>
+        <input type="file" id="imageFile" name="imageFile" required />
+    </div>
+    <button type="submit">Upload</button>
+</form>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div style="color: red;">@ViewBag.ErrorMessage</div>
+}
