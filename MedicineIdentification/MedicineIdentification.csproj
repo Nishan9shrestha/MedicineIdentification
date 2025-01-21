@@ -5,12 +5,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Controllers\HomeController.cs" />
+    <Compile Remove="Migrations\20241125111114_AddUsersTable.cs" />
+    <Compile Remove="Migrations\20241125111114_AddUsersTable.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Remove="wwwroot\lib\ImageModel.consumption.cs" />
     <Content Remove="wwwroot\lib\ImageModel.mbconfig" />
     <Content Remove="wwwroot\lib\ImageModel.mlnet" />
     <Content Remove="wwwroot\lib\ImageModel.training.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">

@@ -1,0 +1,272 @@
+﻿@model MedicineIdentification.Models.Medicine
+
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .slider_Wraper {
+            top:11dvh;
+            position: relative;
+            width: 100%;
+            height: 75vh;
+            overflow: hidden;
+            border-radius:0.5rem;
+        }
+
+    .slider {
+        display: flex;
+        width: 500%;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+        width: 100%; /* Each slide takes up 1/5th of the total width (100% / 5 slides) */
+        height: 100%;
+        background-size: cover; /* Ensure the image covers the slide area */
+        background-position: center; /* Keep the image centered */
+    }
+
+
+        .slide1 {
+        background-image: url('/Proj_Images/Images/image4.jpg');
+        }
+
+        .slide2 {
+            background-image: url('/Proj_Images/Images/image2.jpg');
+        }
+
+        .slide3 {
+        background-image: url('/Proj_Images/Images/image2.webp');
+        }
+
+    .slide4 {
+        background-image: url('/Proj_Images/Images/image.webp');
+    }
+
+    .slide5 {
+        background-image: url('/Proj_Images/Images/image3.webp');
+    }
+
+    /* Glass-like effect around the text */
+    .button_wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        z-index: 10;
+        background-color: rgba(255, 255, 255, 0.2); /* Transparent white background */
+        backdrop-filter: blur(3px); /* Blur effect for the glass look */
+        border: 1px solid rgba(255, 255, 255, 0.3); /* Light border to enhance the glass effect */
+        padding: 20px 40px; /* Padding for spacing around the text */
+        border-radius: 15px; /* Rounded corners */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+    }
+
+    /* Adjust text inside the glass container */
+    .h_Texts h1 {
+        font-size: 3rem;
+        margin: 0;
+        font-weight: bold;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for readability */
+        color:darkcyan;
+    }
+
+    .h_Texts p {
+        font-size: 1.2rem;
+        margin: 10px 0;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); /* Add text shadow for readability */
+        color:black;
+    }
+
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .nav-button {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 50%;
+        }
+
+        #Feature_wrapper {
+            padding: 60px 0;
+            backdrop-filter: blur(2px); /* Apply blur effect to the background */
+            background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white background */
+            border-radius: 10px; /* Optional: adds rounded corners */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: adds a soft shadow for depth */
+            
+        }
+
+    .body_wrapper{
+        padding-top:7rem;
+    }
+
+        #Feature_wrapper h1 {
+            font-size: 2.5rem;
+            color: #333;
+
+        }
+
+    .card {
+        border: none;
+        border-radius: 8px;
+        transition: transform 0.2s ease-in-out;
+        background-attachment:fixed;
+    }
+
+        .card:hover {
+            transform: scale(1.05);
+            cursor:pointer;
+        }
+        .card img{
+            padding-bottom:1rem;
+        }
+
+    .card-title {
+        font-size: 1.25rem;
+        color: #007bff;
+    }
+
+    .card-text {
+        font-size: 1rem;
+        color: #555;
+    }
+
+
+   
+
+    </style>
+</head>
+
+<body>
+    <div class="slider_Wraper">
+        <div class="slider">
+            <div class="slide slide1"></div>
+            <div class="slide slide2"></div>
+            <div class="slide slide3"></div>
+            <div class="slide slide4"></div>
+            <div class="slide slide5"></div>
+
+        </div>
+        <div class="button_wrapper">
+            <div class="h_Texts">
+                <h1>Welcome to Ashwini Kumara</h1>
+                <p>Discover a smarter way to identify medicines with our advanced image processing technology.</p>
+                <p>Get accurate information at your fingertips, anytime, anywhere.</p>
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-button prev">&#10094;</button>
+            <button class="nav-button next">&#10095;</button>
+        </div>
+    </div>
+    <div class="body_wrapper">
+        <!-- Feature Section -->
+        <section class="Feature_wrapper" id="Feature_wrapper">
+            <div class="container text-center">
+                <h1 class="mb-5">Our Key Features</h1>
+                <div class="row justify-content-center">
+                    <!-- Card 1 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body">
+                                <img src="~/Proj_Images/card_I/Image.webp" alt="Image Search" />
+                                <h5 class="card-title" style="padding-top:3.5rem">Image-Based Identification</h5>
+                                <p class="card-text">Upload images to identify medicines quickly using advanced AI and image processing techniques.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <img src="~/Proj_Images/card_I/image2.jpg" alt="Alternate Text" />
+                            <div class="card-body">
+                                <h5 class="card-title" style="padding-top:1rem">Medicine Database</h5>
+                                <p class="card-text">Access a comprehensive database with detailed descriptions and uses for stored medicines.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow-sm h-100">
+                            <img src="~/Proj_Images/card_I/image3.jpg" alt="Alternate Text" style="height:60%; width:90%" />
+                            <div class="card-body">
+                                <h5 class="card-title">User-Friendly Interface</h5>
+                                <p class="card-text">Navigate through an intuitive design for easy medicine management and identification.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="work_Wrapper" id="work_Wrapper">
+            <h1>working Demonestration</h1>
+        </section>
+        <section class="about_wrapper" id="about_wrapper">
+            <h1>About us </h1>
+        </section>
+        <section class="Contact_wrapper" id="Contact_wrapper">
+            <h1>contact us</h1>
+        </section>
+    </div>
+
+    <script>
+        // JavaScript for Slider
+        const slider = document.querySelector('.slider');
+        const slides = document.querySelectorAll('.slide');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            const slideWidth = slides[0].clientWidth;
+            slider.style.transform = `translateX(-${index * slideWidth}px)`;
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        nextButton.addEventListener('click', nextSlide);
+        prevButton.addEventListener('click', prevSlide);
+
+        // Auto-slide every 5 seconds
+        setInterval(nextSlide, 5000);
+    </script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+

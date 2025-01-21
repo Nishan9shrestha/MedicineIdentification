@@ -16,6 +16,11 @@ namespace MedicineIdentification.Controllers
         {
             _context = context;
         }
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
 
         // Action to display the image upload form
         [HttpGet]
@@ -67,7 +72,7 @@ namespace MedicineIdentification.Controllers
             }
 
             // Check if the confidence is above 50%
-            float threshold = 0.5f; // 50% converted to decimal
+            float threshold = 0.7f; // 50% converted to decimal
             float maxScore = prediction.Score.Max();
 
             if (maxScore < threshold) // Compare the maximum score with 0.5

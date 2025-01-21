@@ -9,5 +9,7 @@ namespace MedicineIdentification.Data
         { }
 
         public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<User> Users { get; set; }
+
     }
 }

@@ -4,32 +4,186 @@
     ViewData["Title"] = "Upload and View Medicine Details";
 }
 
-<h2 style="font-family: Arial, sans-serif; color: #333;">@ViewData["Title"]</h2>
+<style>
+    /* General Body Styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(to right, #ffecd2, #fcb69f); /* Soft gradient background */
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+    }
 
-<div style="display: flex; gap: 20px; font-family: Arial, sans-serif; color: #333; align-items: flex-start;">
+    /* Navbar Styles */
+    .navbar {
+        border-top:5rem;
+        background-color: #4a90e2;
+        padding: 5px 3px;
+        position: fixed;
+        top: 0;
+        left: 7rem;
+        right: 0;
+        z-index: 1000;
+        width: 80%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius:1rem;
+    }
+
+        .navbar a {
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+
+            .navbar a:hover {
+                background-color: #357ABD;
+                border-radius: 4px;
+            }
+
+    /* Main Container (For Spacing) */
+    .main-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 30px;
+        padding-top: 80px; /* Adding space to the top to avoid overlap with navbar */
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    /* Title */
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Form Container */
+    .form-container {
+        flex: 1;
+        background-color: #f8f8f8;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        min-width: 250px;
+    }
+
+    .medicine-details-container {
+        flex: 1;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        min-width: 250px;
+        text-align: center;
+    }
+
+    .form-container input[type="file"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #fff;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .form-container button {
+        background-color: #4a90e2;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        margin-right: 10px;
+    }
+
+        .form-container button:hover {
+            background-color: #357ABD;
+        }
+
+    .form-container .cancel-button {
+        background-color: #ccc;
+        color: #333;
+    }
+
+        .form-container .cancel-button:hover {
+            background-color: #b3b3b3;
+        }
+
+    #medicineDetails {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .medicine-details-container img {
+        display: block;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .medicine-details-container h3 {
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 15px;
+        font-size: 22px;
+    }
+
+    .medicine-details-container p {
+        color: #333;
+        font-size: 16px;
+        margin: 5px 0;
+    }
+
+        .medicine-details-container p strong {
+            color: #4a90e2;
+        }
+</style>
+
+<!-- Navbar Section -->
+<div class="navbar">
+    <a href="/">Home</a>
+    <a href="/Medicine/Upload">Upload Medicine</a>
+    <a href="/Medicine/ViewDetails">View Medicine Details</a>
+</div>
+
+<!-- Main Content Section -->
+<div class="main-container">
     <!-- Left Side: Image Upload Form -->
-    <div style="flex: 1; background-color: #f8f8f8; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); min-width: 250px;">
+    <div class="form-container">
+        <h2>@ViewData["Title"]</h2>
         <form id="medicineForm" method="post" enctype="multipart/form-data">
-            <div style="margin-bottom: 15px;">
-                <label for="imageFile" style="display: block; font-weight: bold; margin-bottom: 5px;">Select an image of the medicine:</label>
-                <input type="file" id="imageFile" name="imageFile" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+            <label for="imageFile" style="display: block; font-weight: bold; margin-bottom: 10px;">Select an image of the medicine:</label>
+            <input type="file" id="imageFile" name="imageFile" accept="image/*" required />
+
+            <div style="display: flex; justify-content: space-between;">
+                <button type="submit">Upload</button>
+                <button type="button" class="cancel-button">Cancel</button>
             </div>
-            <button type="submit" style="background-color: #4a90e2; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                Upload
-            </button>
-            <button type="button" style="background-color: #ccc; color: #333; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-left: 10px;">
-                Cancel
-            </button>
         </form>
 
         @if (ViewBag.ErrorMessage != null)
         {
-            <div style="color: red; margin-top: 15px;">@ViewBag.ErrorMessage</div>
+            <div style="color: red; margin-top: 20px; font-size: 16px; text-align: center;">
+                @ViewBag.ErrorMessage
+            </div>
         }
     </div>
 
     <!-- Right Side: Medicine Details (Rendered by AJAX) -->
-    <div id="medicineDetails" style="flex: 1; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); min-width: 250px;">
+    <div id="medicineDetails" class="medicine-details-container">
         <!-- Medicine details will be rendered here dynamically after image upload -->
     </div>
 </div>

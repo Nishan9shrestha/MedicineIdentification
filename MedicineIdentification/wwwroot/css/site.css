@@ -1,22 +1,102 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    scroll-behavior: smooth;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin-top: 60px; /* Add space for the fixed navbar */
+    margin-bottom: 60px;
+    font-family: 'Roboto', sans-serif;
+    background-image: url('/Proj_Images/Images/background3.jpg');
+    background-size: cover; /* Ensure the image covers the slide area */
+    background-position: center; /* Keep the image centered */
+    background-attachment: fixed; /* Keep the background fixed */
+    width: 100%;
+    height: 100%;
+}
+
+/* Button focus/active styles */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* Navbar styles */
+.navbar {
+    position: fixed; /* Fix the navbar at the top */
+    top: 0; /* Align it to the top of the viewport */
+    left: 0; /* Align it to the left edge */
+    width: 100%; /* Make it span the full width */
+    z-index: 1000; /* Ensure it stays above other content */
+    background-color: rgba(255, 255, 255, 0.8); /* Optional: transparent background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for depth */
+    padding: 1rem; /* Optional: adds some padding for better spacing */
+}
+
+/* Navbar brand styles */
+.navbar-brand {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .navbar-brand img {
+        width: 30px; /* Adjust the logo size */
+        height: auto;
+        margin-right: 10px; /* Space between logo and text */
+    }
+
+.nav-link {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.2rem;
+    border-radius: 1rem;
+}
+
+    .nav-link:hover {
+        background-color: #f0f0f0; /* Light gray background */
+        color: #007bff; /* Bootstrap's primary blue */
+        border-radius: 1rem;
+        transform: scale(1.1);
+        transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    }
+
+/* Zoom effect for the logo */
+.logo-zoom {
+    transition: transform 0.3s ease; /* Smooth transition */
+    transform: scale(2.5); /* Zoom in by 20% */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    .logo-zoom:hover {
+        transform: scale(2.8);
+    }
+
+/* Mobile navbar styles */
+.M_Nav {
+    position:fixed;
+    z-index:1000;
+    top: 1rem;
+    width: 90%;
+    border-radius: 3rem;
+    background-color: #765bf6;
+    color: white;
+}
+
+/* Footer styles */
+footer {
+    font-family: 'Roboto', sans-serif;
+    font-style: italic;
+    font-size: 1rem;
 }
