@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System;
 using static MedicineIdentification.ImageModel;
+using System.Net.Mail;
+using System.Net;
 
 namespace MedicineIdentification.Controllers
 {
@@ -95,6 +97,53 @@ namespace MedicineIdentification.Controllers
             // Pass details to the view
             ViewData["ImagePath"] = "/uploads/" + imageFile.FileName;
             return PartialView("MedicineDetails", medicineDetails); // Return the medicine details as a partial view
+        }
+        [HttpPost]
+        public IActionResult SendEmail(string FirstName, string LastName, string MobileNo, string Email, string Message)
+        {
+            try
+            {
+                // Sender's email credentials
+                var fromAddress = new MailAddress(Email,FirstName);
+                var toAddress = new MailAddress("nishanshrestha9909@gmailcom", "Recipient Name");
+                const string fromPassword = "your-email-password"; // Use app-specific password if using Gmail
+                const string subject = "New Contact Form Submission";
+                string body = $"Name: {FirstName} {LastName}\n" +
+                              $"Mobile No: {MobileNo}\n" +
+                              $"Email: {Email}\n" +
+                              $"Message: {Message}";
+
+                // Configure SMTP client
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com", // Use your email provider's SMTP server
+                    Port = 587, // Port for SMTP
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+
+                // Create the email message
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body
+                })
+                {
+                    smtp.Send(message);
+                }
+
+                // Show success message
+                TempData["Success"] = "Email sent successfully!";
+                return RedirectToAction("Index"); // Redirect to the homepage
+            }
+            catch (Exception ex)
+            {
+                // Log the error (you can use any logging library here)
+                TempData["Error"] = "There was an error sending the email. " + ex.Message;
+                return RedirectToAction("Index");
+            }
         }
     }
 }

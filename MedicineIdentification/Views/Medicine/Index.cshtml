@@ -1,9 +1,12 @@
 ﻿@model MedicineIdentification.Models.Medicine
 
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <head>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 
 
     <style>
@@ -113,9 +116,11 @@
         }
 
         #Feature_wrapper {
+           
             padding: 60px 0;
             backdrop-filter: blur(2px); /* Apply blur effect to the background */
-            background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white background */
+            background-color: rgba(118, 91, 246,0.7);
+            /* Semi-transparent white background */
             border-radius: 10px; /* Optional: adds rounded corners */
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: adds a soft shadow for depth */
             
@@ -131,30 +136,320 @@
 
         }
 
-    .card {
+        .Feature_wrapper .card {
         border: none;
-        border-radius: 8px;
+        border-radius: 20px;
         transition: transform 0.2s ease-in-out;
         background-attachment:fixed;
-    }
+            background-color: rgba(118, 91, 246,0.5);
+        }
 
-        .card:hover {
+            .Feature_wrapper .card:hover {
             transform: scale(1.05);
             cursor:pointer;
         }
-        .card img{
+
+            .Feature_wrapper .card img {
             padding-bottom:1rem;
         }
 
-    .card-title {
+        .Feature_wrapper .card-title {
         font-size: 1.25rem;
-        color: #007bff;
+            color: #DBCE11;
+        }
+
+        .Feature_wrapper .card-body{
+            background: #0071d1;
+            border-radius: 3px 2rem 1px 20px;
+        }
+
+        .Feature_wrapper .card-text {
+            font-size: 1rem;
+            color: white;
+            margin-top: 1rem;
     }
 
-    .card-text {
-        font-size: 1rem;
-        color: #555;
+        .work_Wrapper {
+            scroll-margin-top: 20px;
+            background-color: rgba(118, 91, 246,0.9);
+            padding: 50px 0;
+            margin-top:4rem;
+            border-radius:1rem;
+        }
+
+            .work_Wrapper h1 {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 2rem;
+            }
+
+            .work_Wrapper .card-body {
+            background: #0071d1;
+            border-radius:3px 2rem 1px 20px;
+            
+           
+            }
+
+            .work_Wrapper .card {
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+                background-color: rgba(118, 91, 246,0.9);
+            }
+
+                .work_Wrapper .card:hover {
+                transform: scale(1.05);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+
+            .work_Wrapper .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #DBCE11;
+        }
+
+            .work_Wrapper .card-text {
+            font-size: 1rem;
+            color: white;
+            margin-top:1rem;
+            
+        }
+
+            .work_Wrapper .card-img-top {
+            border-radius: 10px;
+            object-fit: cover;
+            height: 150px;
+        }
+        .identifyM{
+            float:right;
+            margin-right:2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .identifyM:hover{
+            transform:scale(1.2);
+        }
+
+        .about_wrapper {
+            scroll-margin-top: 20px;
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #f9f9f9;
+            margin-top:7rem;
+            background-image: url('/Proj_Images/Proj_Logo/background13.jpg');
+            object-fit:cover;
+            border-radius:1rem;
+            background-size: cover; /* Ensure the image covers the slide area */
+            background-position: center; /* Keep the image centered */
+            background-attachment: fixed;
+          
+        }
+
+            .about_wrapper h1 {
+                font-size: 2.5rem;
+                margin-bottom: 30px;
+                color: #333;
+            }
+
+        .about_item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .photo_container {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .photo_container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .text_container {
+            max-width: 600px;
+            font-size: 1rem;
+            color: #555;
+            text-align: center;
+        }
+
+        .social_media {
+            margin-top: 10px;
+
+        }
+
+            .social_media a {
+                margin: 0 10px;
+                font-size: 1.5rem;
+                
+                
+                transition: color 0.3s ease;
+            }
+
+                .social_media a i {
+                    transition: transform 0.2s ease, box-shadow 0.3s ease;
+                }
+                .social_media a i:hover {
+                    transform: scale(1.5);
+                }
+
+        .x-link .twit {
+            font-size: 2rem; /* Default size */
+            transition: transform 0.3s ease; /* Smooth scaling effect */
+        }
+
+        .x-link .twit:hover {
+            transform: scale(1.2); /* Scales up on hover */
+        }
+
+        .Contact_wrapper {
+            scroll-margin-top: 70px;
+            padding: 50px;
+            background-color: #765bf6;
+            font-family: 'Roboto', sans-serif;
+          margin-top:7rem;
+            font-size: 1rem;
+            z-index:10000;
+            float:left;
+            width:120%;
+            margin-left:-7rem;
+            
+}
+
+.Contact_wrapper h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+            .Contact_wrapper .contact-container {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+            .Contact_wrapper .contact-details, .contact-form {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+                .Contact_wrapper .contact-details h2, .Contact_wrapper .contact-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+            .Contact_wrapper .detail {
+                margin-bottom: 20px;
+                display: grid;
+                align-items: center;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 15px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                text-align: left;
+                width:18rem;
+                height:10rem;
+}
+
+            .Contact_wrapper .card_Wraper{
+                margin-bottom: 20px;
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+                gap: 20px; /* Adds spacing between grid items */
+                align-items: center; /* Align items vertically */
+            }
+
+                .Contact_wrapper .detail i {
+    font-size: 24px;
+    color: #007bff;
+    margin-right: 15px;
+}
+
+                .Contact_wrapper .detail p {
+    font-weight: bold;
+    margin: 0;
+}
+
+                .Contact_wrapper .detail span {
+    display: block;
+    margin-top: 5px;
+    color: #555;
+}
+
+            .Contact_wrapper .contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+            .Contact_wrapper .form-row {
+    display: flex;
+    gap: 15px;
+}
+
+            .Contact_wrapper input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+            .Contact_wrapper textarea {
+    resize: none;
+}
+
+            .Contact_wrapper .captcha-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+            .Contact_wrapper button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+        .card_Wraper .detail i{
+            margin:auto;
+        }
+                
+
+                .Contact_wrapper button:hover {
+    background-color: #0056b3;
+}
+
+@@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
     }
+
+    .form-row {
+        flex-direction: column;
+    }
+}
+
+        
+
+               
 
 
    
@@ -193,9 +488,9 @@
                     <!-- Card 1 -->
                     <div class="col-md-4 mb-4">
                         <div class="card shadow-sm h-100">
+                            <img src="~/Proj_Images/card_I/Image.webp" alt="Image Search" style="width:90%; height:60%; margin:auto" />
                             <div class="card-body">
-                                <img src="~/Proj_Images/card_I/Image.webp" alt="Image Search" />
-                                <h5 class="card-title" style="padding-top:3.5rem">Image-Based Identification</h5>
+                                <h5 class="card-title" >Image-Based Identification</h5>
                                 <p class="card-text">Upload images to identify medicines quickly using advanced AI and image processing techniques.</p>
                             </div>
                         </div>
@@ -203,9 +498,9 @@
                     <!-- Card 2 -->
                     <div class="col-md-4 mb-4">
                         <div class="card shadow-sm h-100">
-                            <img src="~/Proj_Images/card_I/image2.jpg" alt="Alternate Text" />
+                            <img src="~/Proj_Images/card_I/image2.jpg" alt="Alternate Text" style="height:60%" />
                             <div class="card-body">
-                                <h5 class="card-title" style="padding-top:1rem">Medicine Database</h5>
+                                <h5 class="card-title" style="padding-top:0.1rem;">Medicine Database</h5>
                                 <p class="card-text">Access a comprehensive database with detailed descriptions and uses for stored medicines.</p>
                             </div>
                         </div>
@@ -225,14 +520,173 @@
         </section>
 
         <section class="work_Wrapper" id="work_Wrapper">
-            <h1>working Demonestration</h1>
+            <h1 class="text-center mb-5">Working Demonstration</h1>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <!-- Step 1 -->
+                    <div class="col-md-3">
+                        <div class="card text-center shadow-sm mb-4" style="border-radius:2rem">
+                            <div class="card-body">
+                                <h5 class="card-title">Step 1</h5>
+                                <img src="~/Proj_Images/Procedure/Tpic.png" alt="Take a Picture" class="card-img-top mb-3" style="height: 250px; object-fit: cover;">
+                                <p class="card-text">Take a clear picture of the medicine using your camera.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="col-md-3">
+                        <div class="card text-center shadow-sm mb-4" style="border-radius:2rem">
+                            <div class="card-body">
+                                <h5 class="card-title">Step 2</h5>
+                                <img src="~/Proj_Images/Procedure/Iselect.png" alt="Select the Photo" class="card-img-top mb-3" style="height: 250px; object-fit: cover;">
+                                <p class="card-text">Select the picture of the medicine from your gallery.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="col-md-3">
+                        <div class="card text-center shadow-sm mb-4" style="border-radius:2rem">
+                            <div class="card-body">
+                                <h5 class="card-title">Step 3</h5>
+                                <img src="~/Proj_Images/Procedure/upload.jpeg" alt="Upload to System" class="card-img-top mb-3" style="height: 250px; object-fit: cover;">
+                                <p class="card-text">Upload the picture to our system for processing.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="col-md-3">
+                        <div class="card text-center shadow-sm mb-4" style="border-radius:2rem">
+                            <div class="card-body">
+                                <h5 class="card-title">Step 4</h5>
+                                <img src="~/Proj_Images/Procedure/Result.png" alt="Get Results" class="card-img-top mb-3" style="height: 250px; object-fit: cover;">
+                                <p class="card-text">Get the detailed output about the medicine instantly!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary identifyM" onclick="location.href='@Url.Action("Input", "Medicine")'">Identify Now</button>
+
         </section>
+
         <section class="about_wrapper" id="about_wrapper">
-            <h1>About us </h1>
+            <h1>About Us</h1>
+
+            <!-- First Photo and Text -->
+            <div class="about_item">
+                <div class="photo_container">
+                    <img src="~/Proj_Images/Team/Nishan.jpg" alt="Team Member 1">
+                </div>
+                <div class="text_container">
+                    <h3>Nishan Shrestha</h3>
+                    <p>Nishan Shrestha is a passionate Software Engineering student at Nepalaya College, 
+                        skilled in Java, C#, .NET, and database management. With a focus on full-stack development,
+                        Nishan excels in creating innovative solutions like school management systems and image processing-based 
+                        applications while continuously expanding knowledge in modern frameworks and technologies.</p>
+                </div>
+            </div>
+            <div class="social_media">
+                <a href="https://www.facebook.com/nishan.shrestha.98229241" target="_blank">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://x.com/NishanShre81287" target="_blank" class="x-link">
+                    <span class="twit" style="font-family: 'XITS'; color: black;">&#x1D54F;</span>
+                </a>
+                <a href="https://www.linkedin.com/in/nishan-shrestha-70858b2b3/" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://www.instagram.com/nishan3886/" target="_blank" style="color:deeppink">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://github.com/Nishan9shrestha" target="_blank" style="color:black">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+
+            <!-- Second Photo and Text -->
+            <div class="about_item" style="margin-top:2rem">
+                <div class="photo_container">
+                    <img src="~/Proj_Images/Team/bikash.jpg" alt="Team Member 2">
+                </div>
+                <div class="text_container">
+                    <h3>Bikash Dahal</h3>
+                    <p>Bikash Dahal is a front-end development enthusiast at Nepalaya College,
+                        specializing in React and JavaScript libraries. He focuses on building dynamic, 
+                        user-friendly interfaces and leveraging modern frameworks to enhance user experiences.</p>
+                </div>
+            </div>
+
+            <!-- Social Media Section -->
+            <div class="social_media">
+                <a href="https://www.facebook.com/profile.php?id=100009085229708" target="_blank">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://twitter.com" target="_blank" class="x-link">
+                    <span class="twit" style="font-family: 'XITS'; color: black;">&#x1D54F;</span>
+                </a>
+                <a href="https://linkedin.com" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://www.instagram.com/bikashdahal11/" target="_blank" style="color:deeppink">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://github.com" target="_blank" style="color:black">
+                    <i class="fab fa-github"></i>
+                    </a>
+            </div>
         </section>
+
         <section class="Contact_wrapper" id="Contact_wrapper">
-            <h1>contact us</h1>
+            <h1>Contact Us</h1>
+            <div class="contact-container"> 
+                <!-- Left Section -->
+                <div class="contact-details">
+                    <h2>Get In Touch With Us Now!</h2>
+                    <div class="card_Wraper">
+                    <div class="detail">
+                        <i class="fa fa-phone"></i>
+                        <p>Phone Number</p>
+                        <span>+977 9818979909</span>
+                    </div>
+                    <div class="detail">
+                        <i class="fa fa-envelope"></i>
+                        <p>Email</p>
+                        <span>Nishan9909@gmail.com</span><br>
+                        <span>BikashDahal@gmail.com</span>
+                    </div>
+                    <div class="detail">
+                        <i class="fa fa-map-marker"></i>
+                        <p>Location</p>
+                            <span>Nuwakot Khadga Bhanjyang 44900</span>
+                    </div>
+                    <div class="detail">
+                        <i class="fa fa-clock-o"></i>
+                        <p>Working Hours</p>
+                        <span>Monday To Saturday<br>09:00 AM To 06:00 PM</span>
+                    </div>
+                    </div>
+                </div>
+
+                <!-- Right Section -->
+                <div class="contact-form">
+                    <h2>Contact Us</h2>
+                    <form asp-action="SendEmail" asp-controller="Medicine" method="post">
+                        <div class="form-row">
+                            <input type="text" name="FirstName" placeholder="First Name *" required>
+                            <input type="text" name="LastName" placeholder="Last Name *" required>
+                        </div>
+                        <div class="form-row">
+                            <input type="text" name="MobileNo" placeholder="Mobile No *" required>
+                            <input type="email" name="Email" placeholder="Email ID *" required>
+                        </div>
+                        <textarea name="Message" placeholder="Message" rows="4"></textarea>
+                        <button type="submit">Submit <i class="fa fa-paper-plane"></i></button>
+                    </form>
+
+                </div>
+            </div>
         </section>
+
     </div>
 
     <script>
