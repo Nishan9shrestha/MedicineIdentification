@@ -7,16 +7,19 @@ using System;
 using static MedicineIdentification.ImageModel;
 using System.Net.Mail;
 using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace MedicineIdentification.Controllers
 {
     public class MedicineController : Controller
     {
         private readonly MedicineDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public MedicineController(MedicineDbContext context)
+        public MedicineController(MedicineDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
         [HttpGet]
         public IActionResult Index()
@@ -98,52 +101,69 @@ namespace MedicineIdentification.Controllers
             ViewData["ImagePath"] = "/uploads/" + imageFile.FileName;
             return PartialView("MedicineDetails", medicineDetails); // Return the medicine details as a partial view
         }
+        // Action to send email
         [HttpPost]
         public IActionResult SendEmail(string FirstName, string LastName, string MobileNo, string Email, string Message)
         {
             try
             {
-                // Sender's email credentials
-                var fromAddress = new MailAddress(Email,FirstName);
-                var toAddress = new MailAddress("nishanshrestha9909@gmailcom", "Recipient Name");
-                const string fromPassword = "your-email-password"; // Use app-specific password if using Gmail
-                const string subject = "New Contact Form Submission";
-                string body = $"Name: {FirstName} {LastName}\n" +
-                              $"Mobile No: {MobileNo}\n" +
-                              $"Email: {Email}\n" +
-                              $"Message: {Message}";
+                // Retrieve email settings from appsettings.json
+                var smtpServer = _configuration["EmailSettings:SMTPServer"];
+                var smtpPort = int.Parse(_configuration["EmailSettings:SMTPPort"]);
+                var senderEmail = _configuration["EmailSettings:SenderEmail"];
+                var senderPassword = _configuration["EmailSettings:SenderPassword"];
+
+                // Sender and recipient
+                var fromAddress = new MailAddress(senderEmail, $"{FirstName} {LastName}");
+                var toAddress = new MailAddress("nishanshrestha9909@gmail.com", "Nishan Shrestha");
+
+                // Email content
+                string subject = "New Contact Form Submission";
+                string body = $"<b>Name:</b> {FirstName} {LastName}<br>" +
+                              $"<b>Mobile No:</b> {MobileNo}<br>" +
+                              $"<b>Email:</b> {Email}<br>" +
+                              $"<b>Message:</b> {Message}";
 
                 // Configure SMTP client
                 var smtp = new SmtpClient
                 {
-                    Host = "smtp.gmail.com", // Use your email provider's SMTP server
-                    Port = 587, // Port for SMTP
+                    Host = smtpServer,
+                    Port = smtpPort,
                     EnableSsl = true,
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                    Credentials = new NetworkCredential(senderEmail, senderPassword),
+                    Timeout = 10000  // Increase timeout to 10 seconds or higher
                 };
 
                 // Create the email message
-                using (var message = new MailMessage(fromAddress, toAddress)
+                using (var mailMessage = new MailMessage(fromAddress, toAddress)
                 {
                     Subject = subject,
-                    Body = body
+                    Body = body,
+                    IsBodyHtml = true // To support HTML content
                 })
                 {
-                    smtp.Send(message);
+                    smtp.Send(mailMessage);
                 }
 
-                // Show success message
+                // Success message
                 TempData["Success"] = "Email sent successfully!";
-                return RedirectToAction("Index"); // Redirect to the homepage
+                return RedirectToAction("Index");
+            }
+            catch (SmtpException smtpEx)
+            {
+                TempData["Error"] = "SMTP Error: " + smtpEx.Message;
+                // Log or display additional smtpEx details like StatusCode, etc.
+                Console.WriteLine($"SMTP Error: {smtpEx.Message}, Status Code: {smtpEx.StatusCode}");
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                // Log the error (you can use any logging library here)
-                TempData["Error"] = "There was an error sending the email. " + ex.Message;
+                TempData["Error"] = "An unexpected error occurred: " + ex.Message;
                 return RedirectToAction("Index");
             }
         }
+
     }
 }
