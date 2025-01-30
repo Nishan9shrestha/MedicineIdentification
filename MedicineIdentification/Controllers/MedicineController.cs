@@ -103,7 +103,7 @@ namespace MedicineIdentification.Controllers
         }
         // Action to send email
         [HttpPost]
-        public IActionResult SendEmail(string FirstName, string LastName, string MobileNo, string Email, string Message)
+        public async Task<IActionResult> SendEmail(string FirstName, string LastName, string MobileNo, string Email, string Message)
         {
             try
             {
@@ -112,6 +112,7 @@ namespace MedicineIdentification.Controllers
                 var smtpPort = int.Parse(_configuration["EmailSettings:SMTPPort"]);
                 var senderEmail = _configuration["EmailSettings:SenderEmail"];
                 var senderPassword = _configuration["EmailSettings:SenderPassword"];
+                var enableSsl = bool.Parse(_configuration["EmailSettings:EnableSsl"]);
 
                 // Sender and recipient
                 var fromAddress = new MailAddress(senderEmail, $"{FirstName} {LastName}");
@@ -125,43 +126,62 @@ namespace MedicineIdentification.Controllers
                               $"<b>Message:</b> {Message}";
 
                 // Configure SMTP client
-                var smtp = new SmtpClient
+                using (var smtp = new SmtpClient(smtpServer, smtpPort))
                 {
-                    Host = smtpServer,
-                    Port = smtpPort,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(senderEmail, senderPassword),
-                    Timeout = 10000  // Increase timeout to 10 seconds or higher
-                };
+                    smtp.EnableSsl = enableSsl;
+                    smtp.Credentials = new NetworkCredential(senderEmail, senderPassword);
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.Timeout = 10000; // Increase timeout to 10 seconds or higher
 
-                // Create the email message
-                using (var mailMessage = new MailMessage(fromAddress, toAddress)
-                {
-                    Subject = subject,
-                    Body = body,
-                    IsBodyHtml = true // To support HTML content
-                })
-                {
-                    smtp.Send(mailMessage);
+                    // Attach the SendCompleted event handler
+                    smtp.SendCompleted += (s, e) =>
+                    {
+                        if (e.Error != null)
+                        {
+                            Console.WriteLine($"SMTP Error: {e.Error.Message}");
+                        }
+                        else if (e.Cancelled)
+                        {
+                            Console.WriteLine("SMTP Send Cancelled.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Email sent successfully.");
+                        }
+                    };
+
+                    // Create the email message
+                    using (var mailMessage = new MailMessage(fromAddress, toAddress)
+                    {
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = true // To support HTML content
+                    })
+                    {
+                        // Send the email asynchronously
+                        await smtp.SendMailAsync(mailMessage);
+                    }
                 }
 
                 // Success message
+                
                 TempData["Success"] = "Email sent successfully!";
-                return RedirectToAction("Index");
+                return Redirect(Url.Action("Index") + "#Contact_wrapper");
+
             }
             catch (SmtpException smtpEx)
             {
                 TempData["Error"] = "SMTP Error: " + smtpEx.Message;
                 // Log or display additional smtpEx details like StatusCode, etc.
                 Console.WriteLine($"SMTP Error: {smtpEx.Message}, Status Code: {smtpEx.StatusCode}");
-                return RedirectToAction("Index");
+                return Redirect(Url.Action("Index") + "#Contact_wrapper");
+
             }
             catch (Exception ex)
             {
                 TempData["Error"] = "An unexpected error occurred: " + ex.Message;
-                return RedirectToAction("Index");
+                return Redirect(Url.Action("Index") + "#Contact_wrapper");
+
             }
         }
 
