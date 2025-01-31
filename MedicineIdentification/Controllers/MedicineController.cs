@@ -26,6 +26,18 @@ namespace MedicineIdentification.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult MedicineDetailsP()
+        {
+            var medicine = GetAllMedicines();
+            return View(medicine);
+        }
+
+        public List<Medicine> GetAllMedicines()
+        {
+            return _context.Medicines.ToList();
+
+        }
 
         // Action to display the image upload form
         [HttpGet]
@@ -77,7 +89,7 @@ namespace MedicineIdentification.Controllers
             }
 
             // Check if the confidence is above 50%
-            float threshold = 0.7f; // 50% converted to decimal
+            float threshold = 0.5f; // 50% converted to decimal
             float maxScore = prediction.Score.Max();
 
             if (maxScore < threshold) // Compare the maximum score with 0.5
@@ -185,5 +197,170 @@ namespace MedicineIdentification.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SendEmailM(string FirstName, string LastName, string MobileNo, string Email, string Message)
+        {
+            try
+            {
+                // Retrieve email settings from appsettings.json
+                var smtpServer = _configuration["EmailSettings:SMTPServer"];
+                var smtpPort = int.Parse(_configuration["EmailSettings:SMTPPort"]);
+                var senderEmail = _configuration["EmailSettings:SenderEmail"];
+                var senderPassword = _configuration["EmailSettings:SenderPassword"];
+                var enableSsl = bool.Parse(_configuration["EmailSettings:EnableSsl"]);
+
+                // Sender and recipient
+                var fromAddress = new MailAddress(senderEmail, $"{FirstName} {LastName}");
+                var toAddress = new MailAddress("nishanshrestha9909@gmail.com", "Nishan Shrestha");
+
+                // Email content
+                string subject = "New Contact Form Submission";
+                string body = $"<b>Name:</b> {FirstName} {LastName}<br>" +
+                              $"<b>Mobile No:</b> {MobileNo}<br>" +
+                              $"<b>Email:</b> {Email}<br>" +
+                              $"<b>Message:</b> {Message}";
+
+                // Configure SMTP client
+                using (var smtp = new SmtpClient(smtpServer, smtpPort))
+                {
+                    smtp.EnableSsl = enableSsl;
+                    smtp.Credentials = new NetworkCredential(senderEmail, senderPassword);
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.Timeout = 10000; // Increase timeout to 10 seconds or higher
+
+                    // Attach the SendCompleted event handler
+                    smtp.SendCompleted += (s, e) =>
+                    {
+                        if (e.Error != null)
+                        {
+                            Console.WriteLine($"SMTP Error: {e.Error.Message}");
+                        }
+                        else if (e.Cancelled)
+                        {
+                            Console.WriteLine("SMTP Send Cancelled.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Email sent successfully.");
+                        }
+                    };
+
+                    // Create the email message
+                    using (var mailMessage = new MailMessage(fromAddress, toAddress)
+                    {
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = true // To support HTML content
+                    })
+                    {
+                        // Send the email asynchronously
+                        await smtp.SendMailAsync(mailMessage);
+                    }
+                }
+
+                // Success message
+
+                TempData["Success"] = "Email sent successfully!";
+                return Redirect(Url.Action("MedicineDetailsP") + "#Contact_wrapper");
+
+            }
+            catch (SmtpException smtpEx)
+            {
+                TempData["Error"] = "SMTP Error: " + smtpEx.Message;
+                // Log or display additional smtpEx details like StatusCode, etc.
+                Console.WriteLine($"SMTP Error: {smtpEx.Message}, Status Code: {smtpEx.StatusCode}");
+                return Redirect(Url.Action("MedicineDetailsP") + "#Contact_wrapper");
+
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "An unexpected error occurred: " + ex.Message;
+                return Redirect(Url.Action("MedicineDetailsP") + "#Contact_wrapper");
+
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendEmailF(string FirstName, string LastName, string MobileNo, string Email, string Message)
+        {
+            try
+            {
+                // Retrieve email settings from appsettings.json
+                var smtpServer = _configuration["EmailSettings:SMTPServer"];
+                var smtpPort = int.Parse(_configuration["EmailSettings:SMTPPort"]);
+                var senderEmail = _configuration["EmailSettings:SenderEmail"];
+                var senderPassword = _configuration["EmailSettings:SenderPassword"];
+                var enableSsl = bool.Parse(_configuration["EmailSettings:EnableSsl"]);
+
+                // Sender and recipient
+                var fromAddress = new MailAddress(senderEmail, $"{FirstName} {LastName}");
+                var toAddress = new MailAddress("nishanshrestha9909@gmail.com", "Nishan Shrestha");
+
+                // Email content
+                string subject = "New Contact Form Submission";
+                string body = $"<b>Name:</b> {FirstName} {LastName}<br>" +
+                              $"<b>Mobile No:</b> {MobileNo}<br>" +
+                              $"<b>Email:</b> {Email}<br>" +
+                              $"<b>Message:</b> {Message}";
+
+                // Configure SMTP client
+                using (var smtp = new SmtpClient(smtpServer, smtpPort))
+                {
+                    smtp.EnableSsl = enableSsl;
+                    smtp.Credentials = new NetworkCredential(senderEmail, senderPassword);
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.Timeout = 10000; // Increase timeout to 10 seconds or higher
+
+                    // Attach the SendCompleted event handler
+                    smtp.SendCompleted += (s, e) =>
+                    {
+                        if (e.Error != null)
+                        {
+                            Console.WriteLine($"SMTP Error: {e.Error.Message}");
+                        }
+                        else if (e.Cancelled)
+                        {
+                            Console.WriteLine("SMTP Send Cancelled.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Email sent successfully.");
+                        }
+                    };
+
+                    // Create the email message
+                    using (var mailMessage = new MailMessage(fromAddress, toAddress)
+                    {
+                        Subject = subject,
+                        Body = body,
+                        IsBodyHtml = true // To support HTML content
+                    })
+                    {
+                        // Send the email asynchronously
+                        await smtp.SendMailAsync(mailMessage);
+                    }
+                }
+
+                // Success message
+
+                TempData["Success"] = "Email sent successfully!";
+                return Redirect(Url.Action("Input") + "#Contact_wrapper");
+
+            }
+            catch (SmtpException smtpEx)
+            {
+                TempData["Error"] = "SMTP Error: " + smtpEx.Message;
+                // Log or display additional smtpEx details like StatusCode, etc.
+                Console.WriteLine($"SMTP Error: {smtpEx.Message}, Status Code: {smtpEx.StatusCode}");
+                return Redirect(Url.Action("Input") + "#Contact_wrapper");
+
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "An unexpected error occurred: " + ex.Message;
+                return Redirect(Url.Action("Input") + "#Contact_wrapper");
+
+            }
+        }
     }
 }

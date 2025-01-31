@@ -11,6 +11,7 @@ namespace MedicineIdentification.Models
         public string Uses { get; set; }
         public string SideEffects { get; set; }
         public string Dosage { get; set; }
+        public string ImagePath { get; set; }
     }
 }
 

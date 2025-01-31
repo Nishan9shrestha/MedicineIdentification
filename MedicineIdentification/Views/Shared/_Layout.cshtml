@@ -31,13 +31,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Medicine" asp-action="Input">Identify</a>
                         </li>
                         <li class="nav-item px-4">
-                            <a class="nav-link text-dark" href="#Feature_wrapper">Features</a>
+                            <a class="nav-link text-dark" href="@Url.Action("Index")#Feature_wrapper">Features</a>
                         </li>
                         <li class="nav-item px-4">
-                            <a class="nav-link text-dark" href="#about_wrapper">Medicine</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Medicine" asp-action="MedicineDetailsP">Medicine</a>
                         </li>
                         <li class="nav-item px-4">
-                            <a class="nav-link text-dark" href="#about_wrapper">About Us</a>
+                            <a class="nav-link text-dark" href="@Url.Action("Index")#about_wrapper">About Us</a>
                         </li>
                         <li class="nav-item mx-2">
                             <a class="nav-link text-dark" href="#Contact_wrapper">Contact Us</a>

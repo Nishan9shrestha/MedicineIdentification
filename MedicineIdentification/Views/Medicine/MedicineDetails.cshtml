@@ -1,16 +1,11 @@
 ﻿@model MedicineIdentification.Models.Medicine
 
-@if (Model != null)
-{
-    <img src="@ViewData["ImagePath"]" alt="Uploaded Image" width="250" style="display: block; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);" />
+<div id="medicineDetails">
+    <img src="@ViewData["ImagePath"]" alt="Medicine Image" width="250" style="display: block; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);" />
     <h3 style="color: #333; font-weight: bold; margin-bottom: 15px; font-size: 22px;">@Model.Label</h3>
+    <p><strong style="color: #4a90e2;">Manufacturer:</strong> @Model.Manufacturer</p>
     <p><strong style="color: #4a90e2;">Composition:</strong> @Model.Composition</p>
     <p><strong style="color: #4a90e2;">Uses:</strong> @Model.Uses</p>
     <p><strong style="color: #4a90e2;">Side Effects:</strong> @Model.SideEffects</p>
-    <p><strong style="color: #4a90e2;">Manufacturer:</strong> @Model.Manufacturer</p>
     <p><strong style="color: #4a90e2;">Dosage:</strong> @Model.Dosage</p>
-}
-else
-{
-    <p style="color: #333; font-size: 16px;">No medicine details found.</p>
-}
+</div>

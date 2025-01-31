@@ -1,0 +1,551 @@
+﻿@model List<MedicineIdentification.Models.Medicine>
+
+@{
+    ViewData["Title"] = "Medicine Gallery";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding-top: 3rem;
+        }
+
+        .container {
+            position: sticky;
+            top: 15rem;
+            width: 80%;
+            margin: auto;
+            text-align: center;
+        }
+
+        .search-bar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+            .search-bar input {
+                width: 60%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+
+            .search-bar button {
+                background: none;
+                border: none;
+                cursor: pointer;
+                margin-left: -30px;
+            }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            justify-content: center;
+        }
+
+            .gallery img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+            }
+
+                .gallery img:hover {
+                    transform: scale(1.05);
+                }
+
+        .see-more {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+            .see-more a {
+                text-decoration: none;
+                color: blue;
+                font-weight: bold;
+            }
+
+        /* Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            margin: 10% auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .modal-details {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .detail-column {
+            flex: 1;
+        }
+
+            .detail-column p {
+                margin: 10px 0;
+            }
+
+        .image-container {
+            text-align: center;
+        }
+
+            .image-container img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+            }
+
+                .image-container img:hover {
+                    transform: scale(1.05);
+                }
+
+            .image-container p {
+                font-size: 14px;
+                margin-top: 5px;
+                font-weight: bold;
+                text-transform: capitalize;
+            }
+
+        /* Contact Us Section */
+        .Contact_wrapper {
+            scroll-margin-top: 70px;
+            padding: 50px;
+            background-color: #765bf6;
+            font-family: 'Roboto', sans-serif;
+            margin-top: 7rem;
+            font-size: 1rem;
+            z-index: 10000;
+            float: left;
+            width: 130%;
+            margin-left: -9rem;
+        }
+
+            .Contact_wrapper h1 {
+                text-align: center;
+                font-size: 36px;
+                margin-bottom: 20px;
+                color: #333;
+            }
+
+        .contact-container {
+            display: flex;
+            gap: 30px;
+            justify-content: space-between;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+
+        .contact-details, .contact-form {
+            flex: 1;
+            padding: 30px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+            .contact-details h2, .contact-form h2 {
+                text-align: center;
+                margin-bottom: 20px;
+                color: #333;
+            }
+        /* Contact Details Cards */
+        .card_Wraper {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+
+        .detail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(to right, #4a90e2, #6ba3eb);
+            border-radius: 12px;
+            color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .detail:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
+
+
+            .detail i {
+                font-size: 32px;
+                margin-bottom: 15px;
+                color: white;
+            }
+
+            .detail p {
+                font-weight: bold;
+                margin: 0;
+                font-size: 18px;
+            }
+
+            .detail span {
+                display: block;
+                margin-top: 5px;
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.9);
+            }
+
+        /* Contact Form */
+        .contact-form form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+
+            .form-row input {
+                flex: 1;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 14px;
+            }
+
+            .form-row textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                font-size: 14px;
+                resize: none;
+            }
+
+        .Contact_wrapper textarea {
+            resize: none;
+        }
+
+        .Contact_wrapper .captcha-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-form button {
+            padding: 12px;
+            background: linear-gradient(to right, #ff6f61, #ff8a7a);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .card_Wraper .detail i {
+            margin: auto;
+        }
+
+        .contact-form button:hover {
+            background: linear-gradient(to right, #ff8a7a, #ff6f61);
+        }
+
+        /* Responsive Design */
+        @@media (max-width: 768px) {
+            .contact-container {
+                flex-direction: column;
+            }
+
+            .card_Wraper {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+
+
+
+<body>
+    <div class="container">
+        
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search medicine..." onkeypress="handleKeyPress(event)">
+            <button onclick="searchMedicine()">🔍</button>
+        </div>
+        
+
+        <!-- Medicine Image Gallery -->
+        <div class="gallery">
+            @{
+                int count = 0;
+            }
+            @foreach (var medicine in Model)
+            {
+                <div class="image-container" style="display: @(count < 9 ? "block" : "none");">
+                    <img src="@Url.Content("~" + medicine.ImagePath.Trim('\''))" alt="@medicine.Label"
+                         data-image="@Url.Content("~" + medicine.ImagePath.Trim('\''))"
+                         data-label="@medicine.Label"
+                         data-manufacturer="@medicine.Manufacturer"
+                         data-composition="@medicine.Composition"
+                         data-uses="@medicine.Uses"
+                         data-side-effects="@medicine.SideEffects"
+                         data-dosage="@medicine.Dosage"
+                         onclick="openModal(this)">
+                    <p>@medicine.Label</p>
+                </div>
+                count++;
+            }
+        </div>
+        <p id="noResultsMessage" style="display: none; color: red;">No such data in the database.</p>
+
+        <!-- "See More" Button -->
+        <div class="see-more">
+            <a href="#" onclick="showAllMedicines()">See More</a>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="medicineModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <img id="modalImage" src="" alt="Medicine Image">
+            <h2 id="modalLabel"></h2>
+            <div class="modal-details">
+                <div class="detail-column">
+                    <p><strong>Manufacturer:</strong></p>
+                    <p><strong>Composition:</strong></p>
+                    <p><strong>Uses:</strong></p>
+                    <p><strong>Side Effects:</strong></p>
+                    <p><strong>Dosage:</strong></p>
+                </div>
+                <div class="detail-column">
+                    <p id="modalManufacturer"></p>
+                    <p id="modalComposition"></p>
+                    <p id="modalUses"></p>
+                    <p id="modalSideEffects"></p>
+                    <p id="modalDosage"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Us Section -->
+    <section class="Contact_wrapper" id="Contact_wrapper">
+        <h1>Contact Us</h1>
+        <div class="contact-container">
+            <!-- Left Section -->
+            <div class="contact-details">
+                <h2>Get In Touch With Us Now!</h2>
+                <div class="card_Wraper">
+                    <div class="detail">
+                        <i class="fa fa-phone"></i>
+                        <p>Phone Number</p>
+                        <span>+977 9818979909</span>
+                    </div>
+                    <div class="detail">
+                        <i class="fa fa-envelope"></i>
+                        <p>Email</p>
+                        <span>Nishan9909@gmail.com</span><br>
+                        <span>BikashDahal@gmail.com</span>
+                    </div>
+                    <div class="detail">
+                        <i class="fa fa-map-marker"></i>
+                        <p>Location</p>
+                        <span>Nuwakot Khadga Bhanjyang 44900</span>
+                    </div>
+                    <div class="detail">
+                        <i class="fa fa-clock-o"></i>
+                        <p>Working Hours</p>
+                        <span>Monday To Saturday<br>09:00 AM To 06:00 PM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Section -->
+            <div class="contact-form">
+                <!-- Success Message -->
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        @TempData["Success"]
+                    </div>
+                }
+
+                <!-- Error Message -->
+                @if (TempData["Error"] != null)
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @TempData["Error"]
+                    </div>
+                }
+                <h2>Contact Us</h2>
+                <form asp-action="SendEmailM" asp-controller="Medicine" method="post">
+                    <div class="form-row">
+                        <input type="text" name="FirstName" placeholder="First Name *" required>
+                        <input type="text" name="LastName" placeholder="Last Name *" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="text" name="MobileNo" placeholder="Mobile No *" required>
+                        <input type="email" name="Email" placeholder="Email ID *" required>
+                    </div>
+                    <textarea name="Message" placeholder="Message" rows="4"></textarea>
+                    <button type="submit">Submit <i class="fa fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
+
+<script>
+    // Function to open the modal
+    function openModal(element) {
+        const image = element.getAttribute("data-image");
+        const label = element.getAttribute("data-label");
+        const manufacturer = element.getAttribute("data-manufacturer");
+        const composition = element.getAttribute("data-composition");
+        const uses = element.getAttribute("data-uses");
+        const sideEffects = element.getAttribute("data-side-effects");
+        const dosage = element.getAttribute("data-dosage");
+
+        document.getElementById("modalImage").src = image;
+        document.getElementById("modalLabel").textContent = label;
+        document.getElementById("modalManufacturer").textContent = manufacturer;
+        document.getElementById("modalComposition").textContent = composition;
+        document.getElementById("modalUses").textContent = uses;
+        document.getElementById("modalSideEffects").textContent = sideEffects;
+        document.getElementById("modalDosage").textContent = dosage;
+
+        document.getElementById("medicineModal").style.display = "block";
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        document.getElementById("medicineModal").style.display = "none";
+    }
+
+    // Close the modal if the user clicks outside of it
+    window.onclick = function (event) {
+        var modal = document.getElementById("medicineModal");
+        if (event.target == modal) {
+            closeModal();
+        }
+    };
+
+    // Search functionality
+    function handleKeyPress(event) {
+        // Check if the Enter key is pressed (key code 13)
+        if (event.key === "Enter") {
+            searchMedicine();
+        }
+    }
+
+    function searchMedicine() {
+        var input = document.getElementById("searchInput").value.toLowerCase();
+        var images = document.querySelectorAll(".gallery img");
+        var noResultsMessage = document.getElementById("noResultsMessage");
+        var foundResults = false;
+
+        images.forEach(img => {
+            var altText = img.getAttribute("alt").toLowerCase();
+            if (altText.includes(input)) {
+                img.parentElement.style.display = "block"; // Show the matching image
+                foundResults = true;
+            } else {
+                img.parentElement.style.display = "none"; // Hide non-matching images
+            }
+        });
+
+        // Show or hide the "no results" message
+        if (foundResults) {
+            noResultsMessage.style.display = "none";
+        } else {
+            noResultsMessage.style.display = "block";
+        }
+    }
+
+    // Function to show all medicines
+    function showAllMedicines() {
+        var allContainers = document.querySelectorAll(".gallery .image-container");
+        allContainers.forEach(container => {
+            container.style.display = "block";
+        });
+
+        document.querySelector(".see-more").style.display = "none";
+    }
+</script>
